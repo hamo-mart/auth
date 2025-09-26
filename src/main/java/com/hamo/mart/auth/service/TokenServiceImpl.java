@@ -1,7 +1,7 @@
 package com.hamo.mart.auth.service;
 
-import com.hamo.mart.auth.dto.LoginRequest;
-import com.hamo.mart.auth.dto.LoginResponse;
+import com.hamo.mart.auth.dto.TokenRequest;
+import com.hamo.mart.auth.dto.TokenResponse;
 import com.hamo.mart.auth.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -20,7 +20,7 @@ public class TokenServiceImpl implements TokenService {
     private final RedisTemplate<String, String> redisTemplate;
 
     @Override
-    public LoginResponse login(LoginRequest request) {
+    public TokenResponse login(TokenRequest request) {
         String accessToken = jwtProvider.generateAccessToken(request);
         String refreshToken = jwtProvider.generateRefreshToken(request);
 
@@ -29,11 +29,11 @@ public class TokenServiceImpl implements TokenService {
         // TTL을 걸어서 Redis에 저장
         redisTemplate.opsForValue().set(refreshTokenKey, refreshToken, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
 
-        return new LoginResponse(accessToken, refreshToken);
+        return new TokenResponse(accessToken, refreshToken);
     }
 
     @Override
-    public LoginResponse refreshToken(LoginRequest request, String clientRefreshToken) {
+    public TokenResponse refreshToken(TokenRequest request, String clientRefreshToken) {
         String refreshTokenKey = REFRESH_TOKEN_PREFIX + request.getUserId();
         String storedRefreshToken = redisTemplate.opsForValue().get(refreshTokenKey);
 
@@ -47,7 +47,7 @@ public class TokenServiceImpl implements TokenService {
             // 새 access token 발급
             String newAccessToken = jwtProvider.generateAccessToken(request);
 
-            return new LoginResponse(newAccessToken, storedRefreshToken);
+            return new TokenResponse(newAccessToken, storedRefreshToken);
         }
         throw new RuntimeException("Invalid refresh token");
     }

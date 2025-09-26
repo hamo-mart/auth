@@ -1,9 +1,20 @@
 server:
-  address: 8082
+  port: 8082
 
 spring:
   data:
     redis:
       port: 6379
-      host: localhost
-      password:
+      host: s4.java21.net
+      password: '*N2vya7H@muDTwdNMR!'
+      database: 227
+
+
+feign:
+  client:
+    gateway:
+      url: http://localhost:8080
+
+
+jwt:
+    secret: XKY4K-2NRWR-8F6P2-448RF-CRYQH TK8TP-9JN6P-7X7WW-RFFTV-B7QPF # 임시

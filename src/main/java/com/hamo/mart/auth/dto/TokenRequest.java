@@ -3,15 +3,15 @@ package com.hamo.mart.auth.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
-public class LoginRequest {
+public class TokenRequest {
 
-
-    private String email;
-    private String password;
+    private Long userId;
+    private List<String> roles;
+    private String nickname;
 }

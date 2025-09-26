@@ -1,12 +1,12 @@
 package com.hamo.mart.auth.service;
 
-import com.hamo.mart.auth.dto.LoginRequest;
-import com.hamo.mart.auth.dto.LoginResponse;
+import com.hamo.mart.auth.dto.TokenRequest;
+import com.hamo.mart.auth.dto.TokenResponse;
 
 public interface TokenService {
 
 
-    LoginResponse login(LoginRequest request);
+    TokenResponse login(TokenRequest request);
 
-    LoginResponse refreshToken(LoginRequest request, String clientRefreshToken);
+    TokenResponse refreshToken(TokenRequest request, String clientRefreshToken);
 }

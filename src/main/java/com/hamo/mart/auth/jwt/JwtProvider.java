@@ -1,6 +1,6 @@
 package com.hamo.mart.auth.jwt;
 
-import com.hamo.mart.auth.dto.LoginRequest;
+import com.hamo.mart.auth.dto.TokenRequest;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -22,7 +22,7 @@ public class JwtProvider {
 
 
 
-    public String generateAccessToken(LoginRequest request){
+    public String generateAccessToken(TokenRequest request){
         String id = String.valueOf(request.getUserId());
         Claims claims = Jwts.claims().setSubject(id)
                 .setIssuedAt(new Date())
@@ -35,7 +35,7 @@ public class JwtProvider {
                 .compact();
     }
 
-    public String generateRefreshToken(LoginRequest request){
+    public String generateRefreshToken(TokenRequest request){
         String id = String.valueOf(request.getUserId());
         Claims claims = Jwts.claims().setSubject(id)
                 .setIssuedAt(new Date())
